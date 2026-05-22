@@ -1,0 +1,7 @@
+[
+  {"season": 1, "title": "The Amazing Race 1", "year": 2001, "color": "#66e3ff", "episode_count": 13, "location_count": 8},
+  {"season": 5, "title": "The Amazing Race 5", "year": 2004, "color": "#f97316", "episode_count": 12, "location_count": 8},
+  {"season": 9, "title": "The Amazing Race 9", "year": 2006, "color": "#a78bfa", "episode_count": 12, "location_count": 7},
+  {"season": 15, "title": "The Amazing Race 15", "year": 2009, "color": "#34d399", "episode_count": 11, "location_count": 7},
+  {"season": 18, "title": "The Amazing Race 18", "year": 2011, "color": "#f43f5e", "episode_count": 12, "location_count": 8}
+]

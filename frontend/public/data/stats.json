@@ -1,0 +1,321 @@
+{
+  "seasonCount": 5,
+  "locationCount": 38,
+  "routeCount": 33,
+  "countryCount": 22,
+  "totalDistanceKm": 231821,
+  "mostVisitedCountries": [
+    {
+      "country": "United States",
+      "visits": 10,
+      "seasons": [
+        1,
+        5,
+        9,
+        15,
+        18
+      ],
+      "episodes": [
+        "S15E1",
+        "S15E11",
+        "S18E1",
+        "S18E12",
+        "S1E1",
+        "S1E13",
+        "S5E1",
+        "S5E12",
+        "S9E1",
+        "S9E12"
+      ],
+      "cities": [
+        "Dallas",
+        "Denver",
+        "Las Vegas",
+        "Los Angeles",
+        "Miami",
+        "New York City",
+        "Palm Springs",
+        "Santa Monica"
+      ],
+      "pit_stops": [],
+      "task_locations": [],
+      "continent": "North America",
+      "lat": 35.63757,
+      "lng": -100.46698
+    },
+    {
+      "country": "Japan",
+      "visits": 3,
+      "seasons": [
+        9,
+        15,
+        18
+      ],
+      "episodes": [
+        "S15E1",
+        "S18E4",
+        "S9E10"
+      ],
+      "cities": [
+        "Tokyo"
+      ],
+      "pit_stops": [
+        "Tokyo Tower",
+        "Yoyogi Park"
+      ],
+      "task_locations": [
+        "Shibuya Crossing"
+      ],
+      "continent": "Asia",
+      "lat": 35.663266666666665,
+      "lng": 139.7136
+    },
+    {
+      "country": "Brazil",
+      "visits": 2,
+      "seasons": [
+        9,
+        18
+      ],
+      "episodes": [
+        "S18E11",
+        "S9E1"
+      ],
+      "cities": [
+        "Rio de Janeiro",
+        "Sao Paulo"
+      ],
+      "pit_stops": [],
+      "task_locations": [
+        "Christ the Redeemer",
+        "Edificio Italia"
+      ],
+      "continent": "South America",
+      "lat": -23.2486,
+      "lng": -44.92675
+    },
+    {
+      "country": "China",
+      "visits": 2,
+      "seasons": [
+        1,
+        18
+      ],
+      "episodes": [
+        "S18E5",
+        "S1E10"
+      ],
+      "cities": [
+        "Beijing",
+        "Kunming"
+      ],
+      "pit_stops": [],
+      "task_locations": [
+        "Stone Forest",
+        "Temple of Heaven"
+      ],
+      "continent": "Asia",
+      "lat": 32.3471,
+      "lng": 109.86529999999999
+    },
+    {
+      "country": "India",
+      "visits": 2,
+      "seasons": [
+        1,
+        18
+      ],
+      "episodes": [
+        "S18E7",
+        "S1E6"
+      ],
+      "cities": [
+        "Delhi",
+        "Varanasi"
+      ],
+      "pit_stops": [],
+      "task_locations": [
+        "Dashashwamedh Ghat",
+        "Red Fort"
+      ],
+      "continent": "Asia",
+      "lat": 26.98155,
+      "lng": 80.12585
+    },
+    {
+      "country": "Russia",
+      "visits": 2,
+      "seasons": [
+        5,
+        9
+      ],
+      "episodes": [
+        "S5E4",
+        "S9E5"
+      ],
+      "cities": [
+        "Moscow",
+        "Saint Petersburg"
+      ],
+      "pit_stops": [
+        "Red Square"
+      ],
+      "task_locations": [
+        "Hermitage Museum"
+      ],
+      "continent": "Europe",
+      "lat": 57.84685,
+      "lng": 33.9677
+    },
+    {
+      "country": "Thailand",
+      "visits": 2,
+      "seasons": [
+        1,
+        9
+      ],
+      "episodes": [
+        "S1E8",
+        "S9E11"
+      ],
+      "cities": [
+        "Bangkok"
+      ],
+      "pit_stops": [
+        "Giant Swing",
+        "Wat Arun"
+      ],
+      "task_locations": [],
+      "continent": "Asia",
+      "lat": 13.7476,
+      "lng": 100.49535
+    },
+    {
+      "country": "Argentina",
+      "visits": 1,
+      "seasons": [
+        5
+      ],
+      "episodes": [
+        "S5E2"
+      ],
+      "cities": [
+        "Buenos Aires"
+      ],
+      "pit_stops": [
+        "Recoleta"
+      ],
+      "task_locations": [],
+      "continent": "South America",
+      "lat": -34.5875,
+      "lng": -58.3974
+    },
+    {
+      "country": "Australia",
+      "visits": 1,
+      "seasons": [
+        18
+      ],
+      "episodes": [
+        "S18E1"
+      ],
+      "cities": [
+        "Sydney"
+      ],
+      "pit_stops": [],
+      "task_locations": [
+        "Sydney Opera House"
+      ],
+      "continent": "Oceania",
+      "lat": -33.8568,
+      "lng": 151.2153
+    },
+    {
+      "country": "Austria",
+      "visits": 1,
+      "seasons": [
+        18
+      ],
+      "episodes": [
+        "S18E9"
+      ],
+      "cities": [
+        "Vienna"
+      ],
+      "pit_stops": [
+        "Vienna State Opera"
+      ],
+      "task_locations": [],
+      "continent": "Europe",
+      "lat": 48.203,
+      "lng": 16.3699
+    }
+  ],
+  "mostVisitedCities": [
+    {
+      "city": "Tokyo, Japan",
+      "visits": 3
+    },
+    {
+      "city": "Bangkok, Thailand",
+      "visits": 2
+    },
+    {
+      "city": "Denver, United States",
+      "visits": 2
+    },
+    {
+      "city": "New York City, United States",
+      "visits": 2
+    },
+    {
+      "city": "Amsterdam, Netherlands",
+      "visits": 1
+    },
+    {
+      "city": "Athens, Greece",
+      "visits": 1
+    },
+    {
+      "city": "Beijing, China",
+      "visits": 1
+    },
+    {
+      "city": "Buenos Aires, Argentina",
+      "visits": 1
+    },
+    {
+      "city": "Dallas, United States",
+      "visits": 1
+    },
+    {
+      "city": "Dar es Salaam, Tanzania",
+      "visits": 1
+    }
+  ],
+  "countriesNeverRevisited": [
+    "Argentina",
+    "Australia",
+    "Austria",
+    "Czech Republic",
+    "Egypt",
+    "France",
+    "Greece",
+    "Netherlands",
+    "Philippines",
+    "Tanzania",
+    "Tunisia",
+    "United Arab Emirates",
+    "Uruguay",
+    "Vietnam",
+    "Zambia"
+  ],
+  "uniqueContinents": [
+    "Africa",
+    "Asia",
+    "Europe",
+    "North America",
+    "Oceania",
+    "South America"
+  ]
+}

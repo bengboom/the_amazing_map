@@ -1,0 +1,487 @@
+[
+  {
+    "country": "United States",
+    "visits": 10,
+    "seasons": [
+      1,
+      5,
+      9,
+      15,
+      18
+    ],
+    "episodes": [
+      "S15E1",
+      "S15E11",
+      "S18E1",
+      "S18E12",
+      "S1E1",
+      "S1E13",
+      "S5E1",
+      "S5E12",
+      "S9E1",
+      "S9E12"
+    ],
+    "cities": [
+      "Dallas",
+      "Denver",
+      "Las Vegas",
+      "Los Angeles",
+      "Miami",
+      "New York City",
+      "Palm Springs",
+      "Santa Monica"
+    ],
+    "pit_stops": [],
+    "task_locations": [],
+    "continent": "North America",
+    "lat": 35.63757,
+    "lng": -100.46698
+  },
+  {
+    "country": "Japan",
+    "visits": 3,
+    "seasons": [
+      9,
+      15,
+      18
+    ],
+    "episodes": [
+      "S15E1",
+      "S18E4",
+      "S9E10"
+    ],
+    "cities": [
+      "Tokyo"
+    ],
+    "pit_stops": [
+      "Tokyo Tower",
+      "Yoyogi Park"
+    ],
+    "task_locations": [
+      "Shibuya Crossing"
+    ],
+    "continent": "Asia",
+    "lat": 35.663266666666665,
+    "lng": 139.7136
+  },
+  {
+    "country": "Brazil",
+    "visits": 2,
+    "seasons": [
+      9,
+      18
+    ],
+    "episodes": [
+      "S18E11",
+      "S9E1"
+    ],
+    "cities": [
+      "Rio de Janeiro",
+      "Sao Paulo"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Christ the Redeemer",
+      "Edificio Italia"
+    ],
+    "continent": "South America",
+    "lat": -23.2486,
+    "lng": -44.92675
+  },
+  {
+    "country": "China",
+    "visits": 2,
+    "seasons": [
+      1,
+      18
+    ],
+    "episodes": [
+      "S18E5",
+      "S1E10"
+    ],
+    "cities": [
+      "Beijing",
+      "Kunming"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Stone Forest",
+      "Temple of Heaven"
+    ],
+    "continent": "Asia",
+    "lat": 32.3471,
+    "lng": 109.86529999999999
+  },
+  {
+    "country": "India",
+    "visits": 2,
+    "seasons": [
+      1,
+      18
+    ],
+    "episodes": [
+      "S18E7",
+      "S1E6"
+    ],
+    "cities": [
+      "Delhi",
+      "Varanasi"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Dashashwamedh Ghat",
+      "Red Fort"
+    ],
+    "continent": "Asia",
+    "lat": 26.98155,
+    "lng": 80.12585
+  },
+  {
+    "country": "Russia",
+    "visits": 2,
+    "seasons": [
+      5,
+      9
+    ],
+    "episodes": [
+      "S5E4",
+      "S9E5"
+    ],
+    "cities": [
+      "Moscow",
+      "Saint Petersburg"
+    ],
+    "pit_stops": [
+      "Red Square"
+    ],
+    "task_locations": [
+      "Hermitage Museum"
+    ],
+    "continent": "Europe",
+    "lat": 57.84685,
+    "lng": 33.9677
+  },
+  {
+    "country": "Thailand",
+    "visits": 2,
+    "seasons": [
+      1,
+      9
+    ],
+    "episodes": [
+      "S1E8",
+      "S9E11"
+    ],
+    "cities": [
+      "Bangkok"
+    ],
+    "pit_stops": [
+      "Giant Swing",
+      "Wat Arun"
+    ],
+    "task_locations": [],
+    "continent": "Asia",
+    "lat": 13.7476,
+    "lng": 100.49535
+  },
+  {
+    "country": "Argentina",
+    "visits": 1,
+    "seasons": [
+      5
+    ],
+    "episodes": [
+      "S5E2"
+    ],
+    "cities": [
+      "Buenos Aires"
+    ],
+    "pit_stops": [
+      "Recoleta"
+    ],
+    "task_locations": [],
+    "continent": "South America",
+    "lat": -34.5875,
+    "lng": -58.3974
+  },
+  {
+    "country": "Australia",
+    "visits": 1,
+    "seasons": [
+      18
+    ],
+    "episodes": [
+      "S18E1"
+    ],
+    "cities": [
+      "Sydney"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Sydney Opera House"
+    ],
+    "continent": "Oceania",
+    "lat": -33.8568,
+    "lng": 151.2153
+  },
+  {
+    "country": "Austria",
+    "visits": 1,
+    "seasons": [
+      18
+    ],
+    "episodes": [
+      "S18E9"
+    ],
+    "cities": [
+      "Vienna"
+    ],
+    "pit_stops": [
+      "Vienna State Opera"
+    ],
+    "task_locations": [],
+    "continent": "Europe",
+    "lat": 48.203,
+    "lng": 16.3699
+  },
+  {
+    "country": "Czech Republic",
+    "visits": 1,
+    "seasons": [
+      15
+    ],
+    "episodes": [
+      "S15E9"
+    ],
+    "cities": [
+      "Prague"
+    ],
+    "pit_stops": [
+      "Charles Bridge"
+    ],
+    "task_locations": [],
+    "continent": "Europe",
+    "lat": 50.0865,
+    "lng": 14.4114
+  },
+  {
+    "country": "Egypt",
+    "visits": 1,
+    "seasons": [
+      5
+    ],
+    "episodes": [
+      "S5E6"
+    ],
+    "cities": [
+      "Giza"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Pyramids of Giza"
+    ],
+    "continent": "Africa",
+    "lat": 29.9792,
+    "lng": 31.1342
+  },
+  {
+    "country": "France",
+    "visits": 1,
+    "seasons": [
+      1
+    ],
+    "episodes": [
+      "S1E2"
+    ],
+    "cities": [
+      "Paris"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Eiffel Tower"
+    ],
+    "continent": "Europe",
+    "lat": 48.8584,
+    "lng": 2.2945
+  },
+  {
+    "country": "Greece",
+    "visits": 1,
+    "seasons": [
+      9
+    ],
+    "episodes": [
+      "S9E7"
+    ],
+    "cities": [
+      "Athens"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Panathenaic Stadium"
+    ],
+    "continent": "Europe",
+    "lat": 37.9683,
+    "lng": 23.7411
+  },
+  {
+    "country": "Netherlands",
+    "visits": 1,
+    "seasons": [
+      15
+    ],
+    "episodes": [
+      "S15E8"
+    ],
+    "cities": [
+      "Amsterdam"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Museumplein"
+    ],
+    "continent": "Europe",
+    "lat": 52.3579,
+    "lng": 4.8811
+  },
+  {
+    "country": "Philippines",
+    "visits": 1,
+    "seasons": [
+      5
+    ],
+    "episodes": [
+      "S5E10"
+    ],
+    "cities": [
+      "Manila"
+    ],
+    "pit_stops": [
+      "Rizal Park"
+    ],
+    "task_locations": [],
+    "continent": "Asia",
+    "lat": 14.5826,
+    "lng": 120.9787
+  },
+  {
+    "country": "Tanzania",
+    "visits": 1,
+    "seasons": [
+      5
+    ],
+    "episodes": [
+      "S5E8"
+    ],
+    "cities": [
+      "Dar es Salaam"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Kariakoo Market"
+    ],
+    "continent": "Africa",
+    "lat": -6.8174,
+    "lng": 39.2695
+  },
+  {
+    "country": "Tunisia",
+    "visits": 1,
+    "seasons": [
+      1
+    ],
+    "episodes": [
+      "S1E3"
+    ],
+    "cities": [
+      "Tunis"
+    ],
+    "pit_stops": [
+      "Sidi Bou Said"
+    ],
+    "task_locations": [],
+    "continent": "Africa",
+    "lat": 36.8702,
+    "lng": 10.3417
+  },
+  {
+    "country": "United Arab Emirates",
+    "visits": 1,
+    "seasons": [
+      15
+    ],
+    "episodes": [
+      "S15E5"
+    ],
+    "cities": [
+      "Dubai"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Burj Khalifa"
+    ],
+    "continent": "Asia",
+    "lat": 25.1972,
+    "lng": 55.2744
+  },
+  {
+    "country": "Uruguay",
+    "visits": 1,
+    "seasons": [
+      5
+    ],
+    "episodes": [
+      "S5E1"
+    ],
+    "cities": [
+      "Montevideo"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Plaza Independencia"
+    ],
+    "continent": "South America",
+    "lat": -34.9067,
+    "lng": -56.199
+  },
+  {
+    "country": "Vietnam",
+    "visits": 1,
+    "seasons": [
+      15
+    ],
+    "episodes": [
+      "S15E3"
+    ],
+    "cities": [
+      "Ho Chi Minh City"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Reunification Palace"
+    ],
+    "continent": "Asia",
+    "lat": 10.777,
+    "lng": 106.6953
+  },
+  {
+    "country": "Zambia",
+    "visits": 1,
+    "seasons": [
+      1
+    ],
+    "episodes": [
+      "S1E1"
+    ],
+    "cities": [
+      "Livingstone"
+    ],
+    "pit_stops": [],
+    "task_locations": [
+      "Victoria Falls"
+    ],
+    "continent": "Africa",
+    "lat": -17.9243,
+    "lng": 25.8572
+  }
+]
