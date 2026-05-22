@@ -43,6 +43,27 @@ Open:
 http://127.0.0.1:5173
 ```
 
+
+## Deploy to GitHub Pages
+
+This project can be published as a static site to GitHub Pages (frontend only).
+
+1. Push to your `main` branch (or trigger the workflow manually).
+2. In GitHub repository settings, open **Pages** and set **Source** to **GitHub Actions**.
+3. The workflow in `.github/workflows/deploy-gh-pages.yml` will build with `npm run build` and publish `frontend/dist`.
+
+Local production build test:
+
+```bash
+npm run build
+```
+
+Optional manual publish from local machine:
+
+```bash
+npm run deploy
+```
+
 ## Regenerate The Dataset
 
 The repository ships with sample processed data so the app runs immediately. To scrape and rebuild the full dataset:
