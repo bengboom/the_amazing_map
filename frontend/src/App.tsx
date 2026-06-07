@@ -89,6 +89,8 @@ export function App() {
         setSelectedSeasons={setSelectedSeasons}
         globalSearch={globalSearch}
         setGlobalSearch={setGlobalSearch}
+        locations={filtered.filteredLocations}
+        routes={filtered.filteredRoutes}
       />
       <main className="workspace">
         <Sidebar
