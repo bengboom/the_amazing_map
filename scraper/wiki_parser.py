@@ -152,10 +152,13 @@ def _parse_location_item(item, current_country: str | None, leg_countries: list[
         country = current_country or (leg_countries[-1] if leg_countries else "")
     if not city:
         city = _city_from_text(destination_text)
+    city = canonical_city(city)
+    if city in KNOWN_COUNTRIES and city in leg_countries:
+        country = city
     if not country or not city:
         return None
     location_name = _location_name_from_text(destination_text, city)
-    return canonical_country(country), canonical_city(city), canonical_location(location_name), loc_type
+    return canonical_country(country), city, canonical_location(location_name), loc_type
 
 
 def _location_type_from_item(item, text: str) -> str:
