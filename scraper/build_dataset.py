@@ -47,6 +47,7 @@ def main() -> None:
     if not locations:
         print("No locations parsed; leaving existing processed data untouched.")
         return
+    locations = collapse_consecutive_city_locations(locations)
     routes = build_routes(locations)
     season_rows = build_seasons(locations)
     countries_geojson = build_country_centroid_geojson(locations)
@@ -93,6 +94,76 @@ def enrich_locations(rows: list[ParsedLocation], geocoder: Geocoder) -> list[dic
     return enriched
 
 
+def collapse_consecutive_city_locations(locations: list[dict[str, object]]) -> list[dict[str, object]]:
+    collapsed: list[dict[str, object]] = []
+    for season in sorted({int(row["season"]) for row in locations}):
+        rows = sorted((row for row in locations if int(row["season"]) == season), key=lambda row: int(row["order"]))
+        selected: list[dict[str, object]] = []
+        start_row = next((row for row in rows if row.get("type") == "start"), rows[0] if rows else None)
+        if start_row:
+            selected.append({**start_row, "type": "start"})
+        for leg in sorted({int(row["leg"]) for row in rows if row.get("leg") is not None}):
+            leg_rows = [row for row in rows if row.get("leg") == leg]
+            terminal = _terminal_city_for_leg(leg_rows)
+            if terminal:
+                selected.append(terminal)
+        for row in rows:
+            if row.get("type") == "finish_line" and row not in selected:
+                selected.append(row)
+
+        city_rows: list[dict[str, object]] = []
+        for row in selected:
+            if city_rows and _same_city(city_rows[-1], row):
+                city_rows[-1] = _merge_city_rows(city_rows[-1], row)
+            else:
+                city_rows.append(row)
+
+        for order, row in enumerate(city_rows, start=1):
+            city = str(row["city"])
+            country = str(row["country"])
+            collapsed.append(
+                {
+                    "id": stable_id("s", season, "city", order, country, city),
+                    "season": season,
+                    "episode": row.get("episode"),
+                    "leg": row.get("leg"),
+                    "country": country,
+                    "city": city,
+                    "location_name": city,
+                    "lat": row["lat"],
+                    "lng": row["lng"],
+                    "type": row.get("type", "route_info"),
+                    "order": order,
+                    "continent": row.get("continent"),
+                    "source_url": row.get("source_url"),
+                }
+            )
+    return collapsed
+
+
+def _terminal_city_for_leg(rows: list[dict[str, object]]) -> dict[str, object] | None:
+    if not rows:
+        return None
+    for wanted_type in ("finish_line", "pit_stop"):
+        matches = [row for row in rows if row.get("type") == wanted_type]
+        if matches:
+            return matches[-1]
+    return rows[-1]
+
+
+def _merge_city_rows(previous: dict[str, object], current: dict[str, object]) -> dict[str, object]:
+    merged = dict(previous)
+    if current.get("type") == "finish_line" or previous.get("type") == "start":
+        merged["type"] = current.get("type")
+        merged["episode"] = current.get("episode")
+        merged["leg"] = current.get("leg")
+    return merged
+
+
+def _same_city(left: dict[str, object], right: dict[str, object]) -> bool:
+    return str(left.get("city", "")).casefold() == str(right.get("city", "")).casefold() and str(left.get("country", "")).casefold() == str(right.get("country", "")).casefold()
+
+
 def build_routes(locations: list[dict[str, object]]) -> list[dict[str, object]]:
     routes = []
     for season, rows in pd.DataFrame(locations).sort_values(["season", "order"]).groupby("season"):
@@ -100,6 +171,8 @@ def build_routes(locations: list[dict[str, object]]) -> list[dict[str, object]]:
         for index in range(len(records) - 1):
             start = records[index]
             end = records[index + 1]
+            if _same_city(start, end):
+                continue
             routes.append(
                 {
                     "id": stable_id("route", season, start["order"], end["order"]),
