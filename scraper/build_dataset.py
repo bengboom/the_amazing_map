@@ -22,6 +22,13 @@ from backend.app.data_store import aggregate_countries, stats
 MAX_SEASONS_TO_PROBE = 60
 MIN_LOCATIONS_PER_SEASON = 10
 FRONTEND_DATA = ROOT / "frontend" / "public" / "data"
+LOCATION_OVERRIDES = {
+    (1, "Trapper Creek"): {
+        "country": "United States",
+        "lat": 62.3463115,
+        "lng": -150.3925522,
+    }
+}
 
 
 def main() -> None:
@@ -81,14 +88,20 @@ def discover_available_seasons() -> list[int]:
 def enrich_locations(rows: list[ParsedLocation], geocoder: Geocoder) -> list[dict[str, object]]:
     enriched = []
     for row in rows:
-        coords = geocoder.geocode(row.location_name, row.city, row.country) or {"lat": 0.0, "lng": 0.0}
+        row_data = asdict(row)
+        override = LOCATION_OVERRIDES.get((row.season, row.city))
+        if override:
+            row_data.update({key: value for key, value in override.items() if key not in {"lat", "lng"}})
+            coords = {"lat": override["lat"], "lng": override["lng"]}
+        else:
+            coords = geocoder.geocode(row.location_name, row.city, row.country) or {"lat": 0.0, "lng": 0.0}
         enriched.append(
             {
-                **asdict(row),
-                "id": stable_id("s", row.season, "o", row.order, row.country, row.city, row.location_name),
+                **row_data,
+                "id": stable_id("s", row.season, "o", row.order, row_data["country"], row.city, row.location_name),
                 "lat": coords["lat"],
                 "lng": coords["lng"],
-                "continent": continent_for_country(row.country),
+                "continent": continent_for_country(str(row_data["country"])),
             }
         )
     return enriched

@@ -39,7 +39,7 @@ export function MapView({ countries, locations, routes, seasons, selectedCountry
           const color = seasonColor(route.season, seasons);
           const weight = selectedCountry && (route.from_country === selectedCountry || route.to_country === selectedCountry) ? 4.5 : 2.2;
           const offset = (index % 4) * 0.45;
-          const arc = routeArcPath(route.from_lat + offset, route.from_lng + offset, route.to_lat + offset, route.to_lng + offset);
+          const arc = routeArcPath(route.from_lat + offset, route.from_lng + offset, route.to_lat + offset, route.to_lng + offset, route.distance_km);
           return (
             <Polyline
               key={route.id}

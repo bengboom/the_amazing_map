@@ -18,13 +18,16 @@ export function countryDetails(country: string | null, countries: CountryAggrega
   return { aggregate, locations: countryLocations, routes: countryRoutes };
 }
 
-export function routeArcPath(fromLat: number, fromLng: number, toLat: number, toLng: number): [number, number][] {
+export function routeArcPath(fromLat: number, fromLng: number, toLat: number, toLng: number, distanceKm: number): [number, number][] {
   const points: [number, number][] = [];
   const steps = 36;
+  const curveHeight = Math.min(7, Math.max(0, (distanceKm - 500) / 1400));
+  const rawLngDelta = toLng - fromLng;
+  const lngDelta = Math.abs(rawLngDelta) > 180 ? rawLngDelta - Math.sign(rawLngDelta) * 360 : rawLngDelta;
   for (let i = 0; i <= steps; i += 1) {
     const t = i / steps;
-    const lat = fromLat + (toLat - fromLat) * t + Math.sin(Math.PI * t) * 7;
-    const lng = fromLng + (toLng - fromLng) * t;
+    const lat = fromLat + (toLat - fromLat) * t + Math.sin(Math.PI * t) * curveHeight;
+    const lng = fromLng + lngDelta * t;
     points.push([lat, lng]);
   }
   return points;
