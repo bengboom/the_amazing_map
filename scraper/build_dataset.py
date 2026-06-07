@@ -11,14 +11,17 @@ import pandas as pd
 if __package__ is None or __package__ == "":
     sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from scraper.config import PROCESSED, RAW, SEASON_COLORS, WIKIPEDIA_SEASON_URL
+from scraper.config import PROCESSED, RAW, ROOT, SEASON_COLORS, WIKIPEDIA_SEASON_URL
 from scraper.fandom import fetch_fandom_locations
 from scraper.geocode import Geocoder
 from scraper.http_client import cached_get
 from scraper.normalize import stable_id
 from scraper.wiki_parser import ParsedLocation, parse_season_html
+from backend.app.data_store import aggregate_countries, stats
 
 MAX_SEASONS_TO_PROBE = 60
+MIN_LOCATIONS_PER_SEASON = 10
+FRONTEND_DATA = ROOT / "frontend" / "public" / "data"
 
 
 def main() -> None:
@@ -31,18 +34,29 @@ def main() -> None:
         url = WIKIPEDIA_SEASON_URL.format(season=season)
         html = cached_get(url, RAW / f"wiki_season_{season}.html")
         parsed = parse_season_html(season, html, url)
-        if not parsed:
-            parsed = fetch_fandom_locations(season)
+        if len(parsed) < MIN_LOCATIONS_PER_SEASON:
+            try:
+                parsed = fetch_fandom_locations(season)
+            except Exception as exc:
+                print(f"Skipping season {season}: Wikipedia yielded {len(parsed)} locations and Fandom fallback failed ({exc}).")
+                parsed = []
+        if len(parsed) < MIN_LOCATIONS_PER_SEASON:
+            print(f"Skipping season {season}: only {len(parsed)} parsed locations.")
+            continue
         locations.extend(enrich_locations(parsed, geocoder))
     if not locations:
         print("No locations parsed; leaving existing processed data untouched.")
         return
     routes = build_routes(locations)
     season_rows = build_seasons(locations)
+    countries_geojson = build_country_centroid_geojson(locations)
+    country_rows = aggregate_countries(locations)
+    stats_row = stats(locations, routes)
     write_json(PROCESSED / "locations.json", locations)
     write_json(PROCESSED / "routes.json", routes)
     write_json(PROCESSED / "seasons.json", season_rows)
-    write_json(PROCESSED / "countries.geojson", build_country_centroid_geojson(locations))
+    write_json(PROCESSED / "countries.geojson", countries_geojson)
+    write_static_frontend_data(season_rows, locations, routes, country_rows, stats_row)
     pd.DataFrame(locations).to_csv(PROCESSED / "locations.csv", index=False)
     pd.DataFrame(routes).to_csv(PROCESSED / "routes.csv", index=False)
     print(f"Wrote {len(locations)} locations, {len(routes)} routes, {len(season_rows)} seasons.")
@@ -154,18 +168,43 @@ def haversine_km(a_lat: float, a_lng: float, b_lat: float, b_lng: float) -> floa
 
 def continent_for_country(country: str) -> str | None:
     lookup = {
-        "United States": "North America",
-        "Japan": "Asia",
-        "Brazil": "South America",
-        "South Africa": "Africa",
-        "India": "Asia",
-        "France": "Europe",
-        "Australia": "Oceania",
-        "United Kingdom": "Europe",
-        "China": "Asia",
-        "Thailand": "Asia",
+        "Argentina": "South America", "Australia": "Oceania", "Austria": "Europe", "Azerbaijan": "Asia",
+        "Bahrain": "Asia", "Bangladesh": "Asia", "Barbados": "North America", "Belgium": "Europe",
+        "Bolivia": "South America", "Botswana": "Africa", "Brazil": "South America", "Bulgaria": "Europe",
+        "Burkina Faso": "Africa", "Cambodia": "Asia", "Canada": "North America", "Chile": "South America",
+        "China": "Asia", "Colombia": "South America", "Costa Rica": "North America", "Croatia": "Europe",
+        "Czech Republic": "Europe", "Denmark": "Europe", "Dominican Republic": "North America",
+        "Ecuador": "South America", "Egypt": "Africa", "Estonia": "Europe", "Ethiopia": "Africa",
+        "Finland": "Europe", "France": "Europe", "French Polynesia": "Oceania", "Georgia": "Asia",
+        "Germany": "Europe", "Ghana": "Africa", "Greece": "Europe", "Guam": "Oceania",
+        "Hong Kong": "Asia", "Hungary": "Europe", "Iceland": "Europe", "India": "Asia",
+        "Indonesia": "Asia", "Ireland": "Europe", "Italy": "Europe", "Jamaica": "North America",
+        "Japan": "Asia", "Jordan": "Asia", "Kazakhstan": "Asia", "Kenya": "Africa", "Kuwait": "Asia",
+        "Laos": "Asia", "Liechtenstein": "Europe", "Lithuania": "Europe", "Macau": "Asia",
+        "Madagascar": "Africa", "Malawi": "Africa", "Malaysia": "Asia", "Malta": "Europe",
+        "Mauritius": "Africa", "Mexico": "North America", "Monaco": "Europe", "Mongolia": "Asia",
+        "Morocco": "Africa", "Mozambique": "Africa", "Namibia": "Africa", "Netherlands": "Europe",
+        "New Zealand": "Oceania", "Norway": "Europe", "Oman": "Asia", "Panama": "North America",
+        "Paraguay": "South America", "Peru": "South America", "Philippines": "Asia", "Poland": "Europe",
+        "Portugal": "Europe", "Puerto Rico": "North America", "Romania": "Europe", "Russia": "Europe",
+        "Senegal": "Africa", "Seychelles": "Africa", "Singapore": "Asia", "Slovenia": "Europe",
+        "South Africa": "Africa", "South Korea": "Asia", "Spain": "Europe", "Sri Lanka": "Asia",
+        "Sweden": "Europe", "Switzerland": "Europe", "Taiwan": "Asia", "Tanzania": "Africa",
+        "Thailand": "Asia", "Trinidad and Tobago": "North America", "Tunisia": "Africa", "Turkey": "Asia",
+        "U.S. Virgin Islands": "North America", "Uganda": "Africa", "Ukraine": "Europe",
+        "United Arab Emirates": "Asia", "United Kingdom": "Europe", "United States": "North America",
+        "Uruguay": "South America", "Vietnam": "Asia", "Zambia": "Africa", "Zimbabwe": "Africa",
     }
     return lookup.get(country)
+
+
+def write_static_frontend_data(seasons: list[dict[str, object]], locations: list[dict[str, object]], routes: list[dict[str, object]], countries: list[dict[str, object]], stats_row: dict[str, object]) -> None:
+    FRONTEND_DATA.mkdir(parents=True, exist_ok=True)
+    write_json(FRONTEND_DATA / "seasons.json", seasons)
+    write_json(FRONTEND_DATA / "locations.json", locations)
+    write_json(FRONTEND_DATA / "routes.json", routes)
+    write_json(FRONTEND_DATA / "countries.json", countries)
+    write_json(FRONTEND_DATA / "stats.json", stats_row)
 
 
 def write_json(path: Path, rows: object) -> None:
