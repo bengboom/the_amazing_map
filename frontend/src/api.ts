@@ -11,32 +11,73 @@ async function getJson<T>(path: string): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-const TRAPPER_CREEK_ID = "s-1-city-13-united-states-trapper-creek";
-const TRAPPER_CREEK = {
-  id: TRAPPER_CREEK_ID,
-  country: "United States",
-  lat: 62.3463115,
-  lng: -150.3925522,
-  continent: "North America"
+type LocationOverride = Pick<RaceLocation, "country" | "lat" | "lng" | "continent">;
+
+const CITY_LOCATION_OVERRIDES: Record<string, LocationOverride> = {
+  "Hong Kong": { country: "Hong Kong", lat: 22.2818333, lng: 114.1582831, continent: "Asia" },
+  Macau: { country: "Macau", lat: 22.20056, lng: 113.54611, continent: "Asia" },
+  Singapore: { country: "Singapore", lat: 1.2899175, lng: 103.8519072, continent: "Asia" }
+};
+
+const SEASON_LOCATION_OVERRIDES: Record<string, LocationOverride> = {
+  "1:Trapper Creek": { country: "United States", lat: 62.3463115, lng: -150.3925522, continent: "North America" }
 };
 
 function normalizeExplorerData(seasons: Season[], locations: RaceLocation[], routes: RaceRoute[], source: "api" | "static") {
   const normalizedLocations = locations.map((location) => {
-    if (location.season !== 1 || location.city !== "Trapper Creek") return location;
-    return { ...location, ...TRAPPER_CREEK };
+    const override = locationOverride(location.season, location.city);
+    if (!override) return location;
+    return { ...location, ...override, id: locationId(location.season, location.order, override.country, location.city) };
   });
   const normalizedRoutes = routes.map((route) => {
-    if (route.id === "route-1-12-13") {
-      return { ...route, to_location_id: TRAPPER_CREEK_ID, to_country: TRAPPER_CREEK.country, to_lat: TRAPPER_CREEK.lat, to_lng: TRAPPER_CREEK.lng, distance_km: 6310.5 };
-    }
-    if (route.id === "route-1-13-14") {
-      return { ...route, from_location_id: TRAPPER_CREEK_ID, from_country: TRAPPER_CREEK.country, from_lat: TRAPPER_CREEK.lat, from_lng: TRAPPER_CREEK.lng, distance_km: 5410.4 };
-    }
-    return route;
+    const from = routeEndpointOverride(route.season, route.order - 1, route.from_city);
+    const to = routeEndpointOverride(route.season, route.order, route.to_city);
+    const normalizedRoute = {
+      ...route,
+      ...(from ? { from_location_id: from.id, from_country: from.country, from_lat: from.lat, from_lng: from.lng } : {}),
+      ...(to ? { to_location_id: to.id, to_country: to.country, to_lat: to.lat, to_lng: to.lng } : {})
+    };
+    if (!from && !to) return normalizedRoute;
+    return {
+      ...normalizedRoute,
+      distance_km: haversineKm(normalizedRoute.from_lat, normalizedRoute.from_lng, normalizedRoute.to_lat, normalizedRoute.to_lng)
+    };
   });
   const countries = buildCountryAggregates(normalizedLocations);
   const stats = buildStats(normalizedLocations, normalizedRoutes, countries);
   return { seasons, locations: normalizedLocations, routes: normalizedRoutes, countries, stats, source };
+}
+
+function locationOverride(season: number, city: string): LocationOverride | undefined {
+  return SEASON_LOCATION_OVERRIDES[`${season}:${city}`] ?? CITY_LOCATION_OVERRIDES[city];
+}
+
+function routeEndpointOverride(season: number, order: number, city: string) {
+  const override = locationOverride(season, city);
+  if (!override) return null;
+  return { ...override, id: locationId(season, order, override.country, city) };
+}
+
+function locationId(season: number, order: number, country: string, city: string) {
+  return `s-${season}-city-${order}-${slug(country)}-${slug(city)}`;
+}
+
+function slug(value: string) {
+  return value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function haversineKm(aLat: number, aLng: number, bLat: number, bLng: number) {
+  const radius = 6371.0088;
+  const phi1 = toRadians(aLat);
+  const phi2 = toRadians(bLat);
+  const deltaPhi = toRadians(bLat - aLat);
+  const deltaLambda = toRadians(bLng - aLng);
+  const h = Math.sin(deltaPhi / 2) ** 2 + Math.cos(phi1) * Math.cos(phi2) * Math.sin(deltaLambda / 2) ** 2;
+  return Math.round(2 * radius * Math.asin(Math.sqrt(h)) * 10) / 10;
+}
+
+function toRadians(value: number) {
+  return (value * Math.PI) / 180;
 }
 
 function buildCountryAggregates(locations: RaceLocation[]): CountryAggregate[] {
