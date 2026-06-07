@@ -2,6 +2,8 @@
 
 A production-style interactive web application for exploring countries, cities, legs, episodes, pit stops, and routes across the US version of **The Amazing Race**.
 
+This is an unofficial fan-made research and visualization project. It is not affiliated with, endorsed by, or sponsored by CBS, World Race Productions, or the producers, owners, or distributors of The Amazing Race.
+
 The project includes:
 
 - React + TypeScript + Leaflet frontend
@@ -96,3 +98,12 @@ The scraper is designed to handle Wikipedia table differences, Amazing Race Fand
 ## Data Accuracy Note
 
 The included sample dataset is intentionally compact and representative. Full historical coverage requires running the scraper with internet access. When exact task coordinates are unavailable, the pipeline geocodes the most precise available location, then falls back to city center.
+
+
+## License, Data Sources, and Attribution
+
+The original source code in this repository is licensed under the MIT License. See [LICENSE](LICENSE).
+
+The included and generated datasets are compiled from publicly available information and may include transformed or normalized information from Wikipedia, Amazing Race Wiki / Fandom, Wikimedia Commons references, and OpenStreetMap geocoding data accessed through Nominatim. Source URLs are retained in exported records where practical through the `source_url` field.
+
+Wikipedia, Wikimedia, Fandom, OpenStreetMap, and Nominatim content may carry their own license and attribution requirements. See [NOTICE.md](NOTICE.md) for the full attribution and reuse notes.
