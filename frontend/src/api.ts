@@ -1,6 +1,7 @@
 import type { CountryAggregate, RaceLocation, RaceRoute, Season, Stats } from "./types";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000";
+const STATIC_BASE = import.meta.env.BASE_URL;
 
 async function getJson<T>(path: string): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`);
@@ -22,11 +23,11 @@ export async function loadExplorerData() {
     return { seasons, locations, routes, countries, stats, source: "api" as const };
   } catch {
     const [seasons, locations, routes, countries, stats] = await Promise.all([
-      fetch("/data/seasons.json").then((r) => r.json() as Promise<Season[]>),
-      fetch("/data/locations.json").then((r) => r.json() as Promise<RaceLocation[]>),
-      fetch("/data/routes.json").then((r) => r.json() as Promise<RaceRoute[]>),
-      fetch("/data/countries.json").then((r) => r.json() as Promise<CountryAggregate[]>),
-      fetch("/data/stats.json").then((r) => r.json() as Promise<Stats>)
+      fetch(`${STATIC_BASE}data/seasons.json`).then((r) => r.json() as Promise<Season[]>),
+      fetch(`${STATIC_BASE}data/locations.json`).then((r) => r.json() as Promise<RaceLocation[]>),
+      fetch(`${STATIC_BASE}data/routes.json`).then((r) => r.json() as Promise<RaceRoute[]>),
+      fetch(`${STATIC_BASE}data/countries.json`).then((r) => r.json() as Promise<CountryAggregate[]>),
+      fetch(`${STATIC_BASE}data/stats.json`).then((r) => r.json() as Promise<Stats>)
     ]);
     return { seasons, locations, routes, countries, stats, source: "static" as const };
   }
